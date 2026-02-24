@@ -1,0 +1,11 @@
+{
+  "name": "biz-insights-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build && node dist/src/server.js",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/server.js",
+    "test": "vitest run"
+  }
+}

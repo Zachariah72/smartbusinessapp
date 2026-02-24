@@ -9,9 +9,15 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    const { messages, businessContext, assistantMemory, outputMode } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const contextPayload = {
+      businessContext: businessContext ?? null,
+      assistantMemory: Array.isArray(assistantMemory) ? assistantMemory : [],
+      outputMode: outputMode ?? "plain_text",
+    };
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -24,30 +30,29 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are BiasharaIQ, a friendly business assistant for small businesses in Kenya and Africa. 
+            content: `You are Biz Insights Africa Assistant, a trusted business companion for SME founders in Africa.
 
-Your job is to help SME owners understand their business performance using simple, clear language — no jargon.
+Core behavior:
+- Understand each user question carefully and answer the exact question first.
+- Use the provided business context and memory records.
+- Use business context only when relevant to the question asked.
+- Give direct, practical, actionable recommendations.
+- Be calm, clear, supportive, and non-judgmental.
+- If information is missing, state what is missing and give a best-effort recommendation.
 
-Context about this business (demo data):
-- Business: Mama Fua Shop (retail)
-- Monthly revenue trending up: from KES 320K in Jan to KES 720K in Dec
-- Total annual revenue: KES 6.04M, profit: KES 3.7M
-- Growth: 18.5% year-over-year
-- Top products: Premium Coffee Beans, Organic Tea Collection, Fresh Juice Pack
-- Slow products: Fresh Juice Pack (-3%), Maize Flour 2kg (-8%), Sugar 1kg (-12%)
-- Saturday sales are 40% higher than weekday average
-- M-Pesa is the most popular payment method
-- 3 failed M-Pesa transactions worth KES 31,200 need follow-up
-- Low stock items: Cooking Oil (8 units), Sugar (5 units), Maize Flour (15 units)
+Greeting behavior:
+- If the user sends only a greeting (like hello, hi, jambo) or small talk, reply with a short greeting and one short offer to help.
+- Do not provide a business report, metrics summary, or unsolicited recommendations unless asked.
 
-Rules:
-- Always respond in simple English that a non-technical person can understand
-- Give specific, actionable advice
-- Use KES currency amounts
-- Be encouraging and positive
-- Keep responses concise (2-4 paragraphs max)
-- If you don't know something, say so honestly
-- Use emojis sparingly to be friendly`,
+Output rules (strict):
+- Return plain text only.
+- Do NOT use markdown, bullet symbols, headings, code blocks, or markup.
+- Keep response concise and useful, usually 4 to 10 sentences.
+- Use KES for money values where relevant.`,
+          },
+          {
+            role: "system",
+            content: `Business profile and memory context:\n${JSON.stringify(contextPayload)}`,
           },
           ...messages,
         ],

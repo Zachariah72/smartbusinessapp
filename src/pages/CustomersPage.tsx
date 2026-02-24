@@ -3,6 +3,7 @@ import { Search, Mail, Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import { useBusinessData } from "@/context/BusinessDataContext";
 
 const demoCustomers = [
   { name: "Amina Wanjiku", email: "amina@email.com", phone: "+254 712 345 678", orders: 24, spent: 156000, lastOrder: "2026-02-21", tier: "Gold" },
@@ -23,7 +24,22 @@ const tierStyles: Record<string, string> = {
 
 const CustomersPage = () => {
   const [search, setSearch] = useState("");
-  const filtered = demoCustomers.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()) || c.email.toLowerCase().includes(search.toLowerCase()));
+  const { routedClients } = useBusinessData();
+  const inferredCustomers = routedClients.map((client) => ({
+    name: client.name,
+    email: "from-upload@local",
+    phone: client.phone || "N/A",
+    orders: 1,
+    spent: Math.round(client.totalSpent),
+    lastOrder: client.firstSeen,
+    tier: client.totalSpent >= 150000 ? "Gold" : client.totalSpent >= 70000 ? "Silver" : "Bronze",
+  }));
+  const mergedCustomers = [...inferredCustomers, ...demoCustomers];
+  const uniqueCustomers = mergedCustomers.filter((customer, idx, arr) => {
+    const key = customer.name.toLowerCase();
+    return arr.findIndex((c) => c.name.toLowerCase() === key) === idx;
+  });
+  const filtered = uniqueCustomers.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()) || c.email.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <DashboardLayout title="Customers" subtitle="Manage your customer relationships">
@@ -35,7 +51,7 @@ const CustomersPage = () => {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filtered.map((customer) => (
-            <div key={customer.email} className="bg-card rounded-xl p-5 shadow-card hover:shadow-elevated transition-shadow">
+            <div key={customer.email} className="surface-card p-5 hover:-translate-y-0.5 hover:shadow-elevated transition-all duration-300">
               <div className="flex items-start justify-between mb-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-sm font-bold text-primary">
                   {customer.name.split(" ").map((n) => n[0]).join("")}

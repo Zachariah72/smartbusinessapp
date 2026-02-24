@@ -14,7 +14,7 @@ const KPICard = ({ title, value, change, prefix, suffix, icon }: KPICardProps) =
   const isPositive = change !== undefined && change >= 0;
 
   return (
-    <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-elevated transition-all duration-300 animate-count-up">
+    <div className="surface-card p-6 hover:-translate-y-0.5 hover:shadow-elevated transition-all duration-300 animate-count-up">
       <div className="flex items-start justify-between mb-4">
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
           {icon}

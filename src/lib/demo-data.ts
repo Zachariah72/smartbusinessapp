@@ -23,6 +23,35 @@ export const demoWeeklyData = [
   { day: "Sun", sales: 38000, orders: 10 },
 ];
 
+export const demoWeeklyRevenueExpenses = demoWeeklyData.map((item) => ({
+  label: item.day,
+  revenue: Math.round(item.sales * 1.18),
+  expenses: Math.round(item.sales * 0.62),
+}));
+
+export const demoMonthlySales = demoSalesData.map((item) => ({
+  label: item.date,
+  sales: item.sales,
+}));
+
+export const demoMonthlyRevenueExpenses = demoSalesData.map((item) => ({
+  label: item.date,
+  revenue: item.revenue,
+  expenses: item.expenses,
+}));
+
+export const demoYearlyRevenueExpenses = [
+  { label: "2024", revenue: 4870000, expenses: 2660000 },
+  { label: "2025", revenue: 5480000, expenses: 2940000 },
+  { label: "2026", revenue: 6040000, expenses: 3220000 },
+];
+
+export const demoYearlySales = [
+  { label: "2024", sales: 3950000 },
+  { label: "2025", sales: 4520000 },
+  { label: "2026", sales: 5110000 },
+];
+
 export const demoTopProducts = [
   { name: "Premium Coffee Beans", sales: 156, revenue: 234000, trend: 12 },
   { name: "Organic Tea Collection", sales: 132, revenue: 198000, trend: 8 },

@@ -2,7 +2,7 @@ import { demoTopProducts, formatKES } from "@/lib/demo-data";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
 const TopProducts = () => (
-  <div className="bg-card rounded-xl p-6 shadow-card">
+  <div className="surface-card p-6">
     <h3 className="font-display text-lg font-semibold text-foreground mb-1">Top Products</h3>
     <p className="text-sm text-muted-foreground mb-6">Best performers this month</p>
     <div className="space-y-4">

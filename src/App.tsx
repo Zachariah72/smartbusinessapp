@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SubscriptionProvider } from "@/context/SubscriptionContext";
+import { BusinessDataProvider } from "@/context/BusinessDataContext";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import OrdersPage from "./pages/OrdersPage";
@@ -17,23 +19,27 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/orders" element={<OrdersPage />} />
-          <Route path="/dashboard/upload" element={<UploadPage />} />
-          <Route path="/dashboard/customers" element={<CustomersPage />} />
-          <Route path="/dashboard/products" element={<ProductsPage />} />
-          <Route path="/dashboard/goals" element={<GoalsPage />} />
-          <Route path="/dashboard/assistant" element={<AssistantPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <BusinessDataProvider>
+      <SubscriptionProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/orders" element={<OrdersPage />} />
+              <Route path="/dashboard/upload" element={<UploadPage />} />
+              <Route path="/dashboard/customers" element={<CustomersPage />} />
+              <Route path="/dashboard/products" element={<ProductsPage />} />
+              <Route path="/dashboard/goals" element={<GoalsPage />} />
+              <Route path="/dashboard/assistant" element={<AssistantPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </SubscriptionProvider>
+    </BusinessDataProvider>
   </QueryClientProvider>
 );
 

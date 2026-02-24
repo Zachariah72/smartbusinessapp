@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -120,6 +120,49 @@
 }
 
 @layer utilities {
+  .app-shell-bg {
+    background-image:
+      radial-gradient(circle at 15% -10%, hsl(var(--primary) / 0.22), transparent 40%),
+      radial-gradient(circle at 90% 0%, hsl(var(--secondary) / 0.18), transparent 35%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+  }
+
+  .page-frame {
+    @apply rounded-2xl border border-border/80 bg-background/85 backdrop-blur-sm shadow-card;
+  }
+
+  .surface-card {
+    @apply rounded-xl border border-border/80 bg-card/95 shadow-card backdrop-blur-sm;
+  }
+
+  .surface-card-strong {
+    @apply rounded-xl border border-border/70 bg-card shadow-elevated;
+  }
+
+  .soft-divider {
+    @apply border-border/70;
+  }
+
+  .grain-overlay {
+    background-image: radial-gradient(hsl(160 30% 10% / 0.035) 0.6px, transparent 0.6px);
+    background-size: 8px 8px;
+  }
+
+  .fade-rise {
+    animation: fade-rise 420ms ease-out both;
+  }
+
+  @keyframes fade-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-hero);

@@ -8,13 +8,13 @@ const statusStyles: Record<string, string> = {
 };
 
 const TransactionsTable = () => (
-  <div className="bg-card rounded-xl p-6 shadow-card">
+  <div className="surface-card p-6">
     <h3 className="font-display text-lg font-semibold text-foreground mb-1">Recent Transactions</h3>
     <p className="text-sm text-muted-foreground mb-6">Latest payment activity</p>
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border">
+          <tr className="border-b soft-divider">
             <th className="text-left py-3 px-2 font-medium text-muted-foreground">Customer</th>
             <th className="text-left py-3 px-2 font-medium text-muted-foreground">Amount</th>
             <th className="text-left py-3 px-2 font-medium text-muted-foreground hidden sm:table-cell">Method</th>

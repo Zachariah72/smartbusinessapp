@@ -16,7 +16,7 @@ const insights = [
 ];
 
 const InsightsCard = () => (
-  <div className="bg-card rounded-xl p-6 shadow-card">
+  <div className="surface-card p-6">
     <div className="flex items-center gap-2 mb-4">
       <Lightbulb className="w-5 h-5 text-accent" />
       <h3 className="font-display text-lg font-semibold text-foreground">Smart Insights</h3>
